@@ -2,7 +2,7 @@
 Streamlit app: upload a red blood cell image and see the predicted class + confidence.
 
 Run:  streamlit run app.py
-EDUCATIONAL PROTOTYPE - NOT A MEDICAL DIAGNOSTIC TOOL.
+EDUCATIONAL PROTOTYPE
 """
 import os
 
@@ -15,10 +15,10 @@ from PIL import Image
 IMG = 224
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "models", "sickle_cell_mobilenetv2.keras")
 
-st.set_page_config(page_title="Sickle Cell Detection (Educational)", page_icon="🩸")
-st.title("🩸 Sickle Cell Detection - Educational Prototype")
+st.set_page_config(page_title="Sickle Cell Detection (Educational)", page_icon=" . ")
+st.title(" Sickle Cell Detection - Educational Prototype")
 st.error("**Not a medical diagnostic tool.** This is a student project. "
-         "Never use it to make or rule out a diagnosis. Consult a qualified professional.")
+        )
 
 
 @st.cache_resource
