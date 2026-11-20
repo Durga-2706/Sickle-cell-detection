@@ -6,8 +6,7 @@ plus a small Streamlit web app.
 
 > ## ⚠️ NOT A MEDICAL DIAGNOSTIC TOOL
 > This is a student/educational prototype. It must **never** be used to diagnose, screen for, or rule out
-> sickle cell disease or any other condition. It was trained on a very small dataset and has not been
-> clinically validated. Always consult a qualified healthcare professional.
+> sickle cell disease or any other condition. 
 
 ## Dataset
 
@@ -36,35 +35,35 @@ Official page: http://erythrocytesidb.uib.es/
 
 ```
 sickle-cell-detection/
-├── app.py                    # Streamlit web app
+├── app.py                   
 ├── requirements.txt
 ├── src/
-│   ├── prepare_dataset.py    # crops cells from the dataset using the masks
-│   └── train_evaluate.py     # split, train, evaluate, save model
-├── models/                   # trained model goes here
-├── results/                  # graphs, confusion matrix, report
-└── data/                     # NOT included (create it yourself, see below)
+│   ├── prepare_dataset.py    
+│   └── train_evaluate.py     
+├── models/                  
+├── results/                 
+└── data/                     
 ```
 
 ## Setup
 
-Python 3.10-3.12 is recommended (TensorFlow does not support every Python version).
+Python 3.10-3.12 
 
-```bash
-git clone https://github.com/<your-username>/sickle-cell-detection.git
+bash
+git clone https://github.com/Durga-2706/sickle-cell-detection.git
 cd sickle-cell-detection
 python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
+source .venv/bin/activate        
 pip install -r requirements.txt
-```
+
 
 ## Reproduce the results
 
 ```bash
-# 1. Crop cells (point --idb2 at the erythrocytesIDB2 folder of the dataset)
+# 1. Crop cells 
 python src/prepare_dataset.py --idb2 "path/to/Version 2, erythrocytesIDB/erythrocytesIDB2" --out data --check
 
-# 2. Train, evaluate and save the model (a GPU, e.g. Google Colab, makes this much faster)
+# 2. Train, evaluate and save the model 
 python src/train_evaluate.py --data data --out .
 ```
 
@@ -77,20 +76,17 @@ the right cells. Outputs: `models/sickle_cell_mobilenetv2.keras` and everything 
 streamlit run app.py
 ```
 
-Upload an image of a **single cell** (like the training crops). The app shows the predicted class and a confidence score.
-Whole-smear photos with many cells are not supported.
+
 
 ## Results
 
-> Fill this in with **your own** numbers from `results/classification_report.txt` and `results/metrics.json`.
-> Do not copy numbers from anywhere else.
 
 | Metric (test set) | Value |
 |---|---|
-| Test accuracy | _fill in_ |
-| Precision / recall / F1 - normal | _fill in_ |
-| Precision / recall / F1 - sickle | _fill in_ |
-| Test images (normal / sickle) | _fill in_ |
+| Test accuracy | |
+| Precision / recall / F1 - normal | |
+| Precision / recall / F1 - sickle |  |
+| Test images (normal / sickle) |  |
 
 Training curves: `results/training_curves.png`  ·  Confusion matrix: `results/confusion_matrix.png`
 
@@ -107,10 +103,6 @@ Training curves: `results/training_curves.png`  ·  Confusion matrix: `results/c
 
 ## Acknowledgements
 
-- Dataset: erythrocytesIDB, UGiVIA group, University of the Balearic Islands. Please cite the authors' papers as
-  requested on the dataset page.
-- Model: MobileNetV2 (Sandler et al., 2018), ImageNet pre-trained weights via TensorFlow/Keras.
-
+- Dataset: erythrocytesIDB, UGiVIA group, University of the Balearic Islands.
 ## Licence
 
-Add a licence of your choice (e.g. MIT) for **your code**. It does not cover the dataset, which has its own terms.
