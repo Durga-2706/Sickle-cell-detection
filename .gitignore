@@ -1,0 +1,11 @@
+# Dataset: do NOT upload it (access requires accepting the authors' release agreement)
+data/
+*.zip
+
+# Python / environment
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+.DS_Store
