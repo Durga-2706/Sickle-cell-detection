@@ -1,12 +1,11 @@
-# 🩸 Sickle Cell Detection Using Deep Learning
+#  Sickle Cell Detection Using Deep Learning
 
 An educational image-classification project: a MobileNetV2 transfer-learning model that classifies
 single red blood cell images from blood smears as **normal (circular)** or **sickle-shaped (elongated)**,
 plus a small Streamlit web app.
 
-> ## ⚠️ NOT A MEDICAL DIAGNOSTIC TOOL
-> This is a student/educational prototype. It must **never** be used to diagnose, screen for, or rule out
-> sickle cell disease or any other condition. 
+> ## NOT A MEDICAL DIAGNOSTIC TOOL
+> This is a student/educational prototype. It must **never** be used to diagnose, screen for, or rule out sickle cell disease.  
 
 ## Dataset
 
@@ -14,8 +13,6 @@ plus a small Streamlit web app.
 provided by the UGiVIA research group, University of the Balearic Islands (Spain).
 Official page: http://erythrocytesidb.uib.es/
 
-- Access requires accepting the authors' **release agreement**, so **this repository does not include the dataset**.
-  Please request it yourself from the official page and cite the authors' publications listed there.
 - Used classes: `circular` → **normal**, `elongated` → **sickle**. The `other` class is not used.
 - The dataset provides 50 smear photos, each with one mask per cell type. `src/prepare_dataset.py` cuts each
   masked cell out of its smear photo.
