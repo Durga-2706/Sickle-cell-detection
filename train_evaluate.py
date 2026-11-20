@@ -1,16 +1,10 @@
 """
 Steps 2-5 - Split, preprocess, train, evaluate and save the model.
 
-* Split is done BY SMEAR (source_id), never by single cell, so cells from the
+* Split is done BY SMEAR(id) , never by single cell, so cells from the
   same blood smear never appear in both training and testing (no data leakage).
-* Images are padded to a square (so cells are not stretched), resized to 224x224.
-* Pixel normalisation to [-1, 1] happens INSIDE the model (Rescaling layer), so
-  the app must feed raw 0-255 RGB pixels.
 * Model: MobileNetV2 (ImageNet weights, frozen) + small classification head.
 
-Usage:
-    python src/train_evaluate.py --data data --out .
-(creates models/ and results/ inside --out)
 """
 import argparse
 import json
@@ -55,7 +49,7 @@ def main(data_dir, out_dir):
     os.makedirs(results_dir, exist_ok=True)
     tf.keras.utils.set_random_seed(SEED)
 
-    # ---- 1. Split by smear -------------------------------------------------
+    # 1. Split by smear
     m = pd.read_csv(os.path.join(data_dir, "manifest.csv"), dtype={"source_id": str})
     m["path"] = data_dir + "/raw/" + m["label"] + "/" + m["filename"]
     ids = np.array(sorted(m.source_id.unique()))
@@ -76,7 +70,7 @@ def main(data_dir, out_dir):
     X_val, y_val = load(m[m.split == "val"])
     X_test, y_test = load(m[m.split == "test"])
 
-    # ---- 2. Model ----------------------------------------------------------
+    # 2. Model 
     cw = compute_class_weight("balanced", classes=np.array([0, 1]), y=y_train)
     class_weight = {0: cw[0], 1: cw[1]}
     print("Class weights:", class_weight)
@@ -102,7 +96,7 @@ def main(data_dir, out_dir):
         callbacks=[tf.keras.callbacks.EarlyStopping(monitor="val_loss", patience=4,
                                                     restore_best_weights=True)])
 
-    # ---- 3. Accuracy / loss graphs ----------------------------------------
+    # 3. Accuracy / loss graphs
     fig, ax = plt.subplots(1, 2, figsize=(12, 4))
     ax[0].plot(history.history["accuracy"], label="train")
     ax[0].plot(history.history["val_accuracy"], label="validation")
@@ -114,10 +108,10 @@ def main(data_dir, out_dir):
     plt.savefig(os.path.join(results_dir, "training_curves.png"), dpi=150)
     plt.close()
 
-    # ---- 4. Save model -----------------------------------------------------
+    # 4. Save model
     model.save(os.path.join(models_dir, "sickle_cell_mobilenetv2.keras"))
 
-    # ---- 5. Evaluate on the untouched test set ----------------------------
+    # 5. Evaluate on the untouched test set 
     probs = model.predict(X_test).ravel()
     pred = (probs >= 0.5).astype(int)
     report = classification_report(y_test, pred, labels=[0, 1], target_names=NAMES,
